@@ -1,6 +1,7 @@
-#' Player Performance Score
+#' Player Performance Rating
 #'
-#' This function calculates a player's performance score based on goals, assists, passes, tackles, and shots.
+#' This function calculates a player's match rating (1-10) based on key performance metrics.
+#'
 #'
 #' @param goals Number of goals scored.
 #' @param assists Number of assists.
@@ -8,12 +9,28 @@
 #' @param tackles Number of tackles.
 #' @param shots Total shots taken.
 #'
-#' @return A numeric performance score.
+#' @return A numeric match rating between 1 and 10.
 #' @examples
-#' player_performance(goals = 3, assists = 2, passes = 50, tackles = 4, shots = 6)
+#' player_performance(goals = 2, assists = 1, passes = 45, tackles = 3, shots = 4)
 #' @export
 player_performance <- function(goals, assists, passes, tackles, shots) {
-  score <- (goals * 10) + (assists * 7) + (passes * 0.2) + (tackles * 3) + (shots * 2)
-  return(score)
+
+
+  weighted_score <- (goals * 35) +
+    (assists * 25) +
+    (passes * 0.2) +
+    (tackles * 15) +
+    (shots * 10)
+
+
+  max_score <- 250
+
+
+  rating <- (weighted_score / max_score) * 9 + 1  # Scale to fit between 1-10
+
+
+  rating <- max(1, min(rating, 10))
+
+  return(round(rating, 1))
 }
 
